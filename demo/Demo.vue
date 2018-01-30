@@ -1,6 +1,5 @@
 <template>
-    <div id="app" class="levels">
-        <v-tree :options="treeOptions">
+        <v-tree id="app" :options="treeOptions">
             <div slot="renderContent" slot-scope="props" class="s_tr">
 
                 <div class="s_content">
@@ -15,7 +14,6 @@
                 </div>
             </div>
         </v-tree>
-    </div>
 </template>
 
 <script>
@@ -90,7 +88,7 @@ export default {
         padding: 12px 20px;
         border-radius: 4px;
     }
-    .levels{
+    #app{
         width:97%;
         background:#e0eef2;
         padding:1rem 0.7rem 1rem 1rem;
