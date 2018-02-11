@@ -51,7 +51,6 @@
             }
         },
         methods: {
-
             iconClick(event){
                 var children = this.$children;
                 for (var i = 0; i < children.length; i++) {
@@ -63,7 +62,7 @@
             },
             extendNodeValue(options){
                 for (var i = 0; i < options.length; i++) {
-                    this.nodes.push({data: options[i], extend: true})
+                    this.$set(this.nodes, i,{data: options[i], extend: true})
                 }
             },
             beforeEnter(el) {
@@ -158,6 +157,6 @@
     }
     .shink {
         transition: all .5s;
-        transform: rotate(90deg);
+        transform: rotate(0deg);
     }
 </style>
