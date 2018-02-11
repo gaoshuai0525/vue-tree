@@ -1,8 +1,16 @@
 <template>
-    <transition name='fade'>
+    <transition name='fade'
+                @before-enter="beforeEnter"
+                @enter="enter"
+                @after-enter="afterEnter"
+                @before-leave="beforeLeave"
+                @leave="leave"
+                @after-leave="afterLeave"
+    >
+
         <ul class="tree" v-show="visible">
             <li class="treenode" v-for="(item,i) in options">
-                <img src="./up_two.png" @click="iconClick($event)" :class="nodes[i].extend ? 'expand' :''"/>
+                <img v-if="item.child" src="./up_two.png" @click="iconClick($event)" :class="nodes[i].extend ? 'expand' :'shink'"/>
                 <slot name="renderContent" :item="item" :options="options">
                 </slot>
                 <template v-if="item.child">
@@ -43,6 +51,7 @@
             }
         },
         methods: {
+
             iconClick(event){
                 var children = this.$children;
                 for (var i = 0; i < children.length; i++) {
@@ -56,6 +65,60 @@
                 for (var i = 0; i < options.length; i++) {
                     this.nodes.push({data: options[i], extend: true})
                 }
+            },
+            beforeEnter(el) {
+                if (!el.dataset) el.dataset = {};
+
+                el.dataset.oldPaddingTop = el.style.paddingTop;
+                el.dataset.oldPaddingBottom = el.style.paddingBottom;
+
+                el.style.height = '0';
+                el.style.paddingTop = 0;
+                el.style.paddingBottom = 0;
+            },
+
+            enter(el) {
+                el.dataset.oldOverflow = el.style.overflow;
+                if (el.scrollHeight !== 0) {
+                    el.style.height = el.scrollHeight + 'px';
+                    el.style.paddingTop = el.dataset.oldPaddingTop;
+                    el.style.paddingBottom = el.dataset.oldPaddingBottom;
+                } else {
+                    el.style.height = '';
+                    el.style.paddingTop = el.dataset.oldPaddingTop;
+                    el.style.paddingBottom = el.dataset.oldPaddingBottom;
+                }
+                el.style.overflow = 'hidden';
+            },
+
+            afterEnter(el) {
+                el.style.height = '';
+                el.style.overflow = el.dataset.oldOverflow;
+            },
+
+            beforeLeave(el) {
+                if (!el.dataset) el.dataset = {};
+                el.dataset.oldPaddingTop = el.style.paddingTop;
+                el.dataset.oldPaddingBottom = el.style.paddingBottom;
+                el.dataset.oldOverflow = el.style.overflow;
+
+                el.style.height = el.scrollHeight + 'px';
+                el.style.overflow = 'hidden';
+            },
+
+            leave(el) {
+                if (el.scrollHeight !== 0) {
+                    el.style.height = 0;
+                    el.style.paddingTop = 0;
+                    el.style.paddingBottom = 0;
+                }
+            },
+
+            afterLeave(el) {
+                el.style.height = '';
+                el.style.overflow = el.dataset.oldOverflow;
+                el.style.paddingTop = el.dataset.oldPaddingTop;
+                el.style.paddingBottom = el.dataset.oldPaddingBottom;
             }
         }
     }
@@ -87,15 +150,14 @@
     }
 
     .fade-enter-active, .fade-leave-active {
-        transition: height 5s ease;
+        transition: height .5s ease;
     }
-
-    .fade-enter, .fade-leave-active {
-        height: 0;
-        padding-bottom: 0;
-    }
-
     .expand {
+        transition: all .5s;
+        transform: rotate(90deg);
+    }
+    .shink {
+        transition: all .5s;
         transform: rotate(90deg);
     }
 </style>
