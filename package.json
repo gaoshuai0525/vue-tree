@@ -1,5 +1,5 @@
 {
-  "name": "vue-tree",
+  "name": "vue-tree-gaoshuai",
   "version": "1.0.0",
   "description": "select component for Vue.js.",
   "main": "dist/vue-tree.js",
@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "amd": "0.0.0",
+    "cnpm": "^5.2.0",
     "lodash": "^4.17.4",
     "resize-detector": "0.0.5",
     "the-answer": "^1.0.0",

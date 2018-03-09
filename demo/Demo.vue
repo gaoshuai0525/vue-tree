@@ -1,7 +1,6 @@
 <template>
     <v-tree id="app" :options="treeOptions">
         <div slot="renderContent" slot-scope="props" class="s_tr">
-
             <div class="s_content">
                 <li>
                     {{props.item?props.item.name:null}}
@@ -17,9 +16,7 @@
 </template>
 
 <script>
-
     import vTree from '../src/index'
-
     export default {
         components: {
             'v-tree': vTree
@@ -64,7 +61,6 @@
                     des: item.name + '-' + (item.child.length + 1),
                     code: item.name + '-' + (item.child.length + 1)
                 })
-
             }
         },
 

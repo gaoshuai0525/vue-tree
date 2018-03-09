@@ -8,7 +8,6 @@ export default {
   input: 'src/index.js',
   output:{
       file:'dist/vue-tree.min.js',
-
       format:'cjs',
       sourcemap:true
   },

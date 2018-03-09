@@ -7,15 +7,14 @@
                 @leave="leave"
                 @after-leave="afterLeave"
     >
-
         <ul class="tree" v-show="visible">
             <li class="treenode" v-for="(item,i) in options">
-                <img v-if="item.child" src="./up_two.png" @click="iconClick($event)" :class="nodes[i].extend ? 'expand' :'shink'"/>
+                <img v-if="item.child" src="./up_two.png" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"/>
                 <slot name="renderContent" :item="item" :options="options">
                 </slot>
                 <template v-if="item.child">
                     <vueTree :options="item.child">
-                        <img src="./up_two.png" @click="iconClick($event)"/>
+                        <img src="./up_two.png" @click="iconClick($event,i)"/>
                         <template class="node-content" slot="renderContent" slot-scope="props">
                             <slot name="renderContent" :item="props.item" :options="props.options"></slot>
                         </template>
@@ -43,7 +42,6 @@
             this.extendNodeValue(this.options)
         },
         mounted () {
-
         },
         watch: {
             options (value) {
@@ -51,14 +49,15 @@
             }
         },
         methods: {
-            iconClick(event){
+            iconClick(event,i){
                 var children = this.$children;
-                for (var i = 0; i < children.length; i++) {
+                for (let i = 0; i < children.length; i++) {
                     if (children[i].$el.parentElement.contains(event.target)) {
                         children[i].visible = children[i].visible ? false : true;
-                        this.nodes[i].extend = children[i].visible;
+                       // this.nodes[i].extend = children[i].visible;
                     }
                 }
+                this.nodes[i].extend = !this.nodes[i].extend;
             },
             extendNodeValue(options){
                 for (var i = 0; i < options.length; i++) {
@@ -67,10 +66,8 @@
             },
             beforeEnter(el) {
                 if (!el.dataset) el.dataset = {};
-
                 el.dataset.oldPaddingTop = el.style.paddingTop;
                 el.dataset.oldPaddingBottom = el.style.paddingBottom;
-
                 el.style.height = '0';
                 el.style.paddingTop = 0;
                 el.style.paddingBottom = 0;
