@@ -17,6 +17,7 @@
 
 <script>
     import vTree from '../src/index'
+//import vTree from '../dist/vue-tree.min'
     export default {
         components: {
             'v-tree': vTree

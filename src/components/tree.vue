@@ -9,12 +9,14 @@
     >
         <ul class="tree" v-show="visible">
             <li class="treenode" v-for="(item,i) in options">
-                <img v-if="item.child" src="./up_two.png" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"/>
+                <i class="icon" v-if="item.child" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"></i>
+                <!--<img v-if="item.child" src="./up_two.png" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"/>-->
                 <slot name="renderContent" :item="item" :options="options">
                 </slot>
                 <template v-if="item.child">
                     <vueTree :options="item.child">
-                        <img src="./up_two.png" @click="iconClick($event,i)"/>
+                        <i class="icon" v-if="item.child" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"></i>
+                        <!--<img src="./up_two.png" @click="iconClick($event,i)"/>-->
                         <template class="node-content" slot="renderContent" slot-scope="props">
                             <slot name="renderContent" :item="props.item" :options="props.options"></slot>
                         </template>
@@ -139,21 +141,30 @@
         display: inline-block;
     }
 
-    img {
+    .icon{
+        margin-top: 10px;
         float: left;
-        padding: 8px;
-        margin-right: 8px;
+        transform-origin: center 25%;
+        border-top: 10px solid #C7C7C7;
+        border-right:10px solid transparent;
+        border-bottom:10px solid transparent;
+        border-left:10px solid transparent;
     }
+    /*img {*/
+        /*float: left;*/
+        /*padding: 8px;*/
+        /*margin-right: 8px;*/
+    /*}*/
 
     .fade-enter-active, .fade-leave-active {
         transition: height .5s ease;
     }
     .expand {
         transition: all .5s;
-        transform: rotate(90deg);
+        transform: rotate(0deg);
     }
     .shink {
         transition: all .5s;
-        transform: rotate(0deg);
+        transform: rotate(-90deg);
     }
 </style>
