@@ -9,14 +9,12 @@
     >
         <ul class="tree" v-show="visible">
             <li class="treenode" v-for="(item,i) in options">
-                <i class="icon" v-if="item.child" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"></i>
-                <!--<img v-if="item.child" src="./up_two.png" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"/>-->
+                <i class="icon" v-if="item.child&&item.child.length!=0" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"></i>
                 <slot name="renderContent" :item="item" :options="options">
                 </slot>
                 <template v-if="item.child">
                     <vueTree :options="item.child">
-                        <i class="icon" v-if="item.child" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"></i>
-                        <!--<img src="./up_two.png" @click="iconClick($event,i)"/>-->
+                        <i class="icon" v-if="item.child&&item.child.length!=0" @click="iconClick($event,i)" :class="nodes[i].extend ? 'expand' :'shink'"></i>
                         <template class="node-content" slot="renderContent" slot-scope="props">
                             <slot name="renderContent" :item="props.item" :options="props.options"></slot>
                         </template>

@@ -1,6 +1,6 @@
 {
   "name": "vue-tree-gaoshuai",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "select component for Vue.js.",
   "main": "dist/vue-tree.js",
   "scripts": {
